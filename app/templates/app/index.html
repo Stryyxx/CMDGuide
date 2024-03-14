@@ -1,0 +1,11 @@
+{% extends 'layout.html' %} {% block body %}
+<h2>All Quizzes</h2>
+<ul>
+	{% for quiz in quizzes %}
+	<li><a href="{% url 'take_quiz' quiz.id %}">{{ quiz.title }}</a> - {{ quiz.description }}</li>
+	{% empty %}
+	<li>No quizzes available.</li>
+	{% endfor %}
+	<a href="{% url 'create_quiz' %}" class="btn btn-primary">Create New Quiz</a>
+</ul>
+{% endbody %}

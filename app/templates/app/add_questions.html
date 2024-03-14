@@ -1,0 +1,7 @@
+<form method="post" action="{% url 'add_questions' quiz.id %}">
+	{% csrf_token %}
+	<label for="text">Question Text:</label>
+	<input type="text" id="text" name="text" required /><br /><br />
+	<!-- Add inputs for choices here -->
+	<button type="submit">Add Question</button>
+</form>
