@@ -1,4 +1,4 @@
-{% extends 'app/layout.html' %} {% block body %}
+{% extends 'layout.html' %} {% block body %}
 <h2>All Quizzes</h2>
 <ul>
 	{% for quiz in quizzes %}
@@ -8,4 +8,4 @@
 	{% endfor %}
 	<a href="{% url 'create_quiz' %}" class="btn btn-primary">Create New Quiz</a>
 </ul>
-{% endblock %}
+{% endbody %}
