@@ -2,6 +2,12 @@
 	{% csrf_token %}
 	<label for="text">Question Text:</label>
 	<input type="text" id="text" name="text" required /><br /><br />
-	<!-- Add inputs for choices here -->
+	<label for="text">Choices:</label>
+	<div id="choices">
+		<input type="text" name="choice" id="choice1" required />
+		<input type="text" name="choice" id="choice2" required />
+		<input type="text" name="choice" id="choice3" required />
+		<input type="text" name="choice" id="choice4" required />
+	</div>
 	<button type="submit">Add Question</button>
 </form>

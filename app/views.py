@@ -15,7 +15,7 @@ def create_quiz(request):
             quiz = Quiz(title=title, description=description, creator=request.user)
             quiz.save()
             return redirect('add_questions', quiz_id=quiz.id)
-    return render(request, 'quizzes/create_quiz.html', {'error_message': error_message})
+    return render(request, 'app/create_quiz.html', {'error_message': error_message})
 
 def add_questions(request, quiz_id):
     quiz = Quiz.objects.get(id=quiz_id)
@@ -26,7 +26,7 @@ def add_questions(request, quiz_id):
         question.save()
         # Redirect or render as needed, possibly to add more questions or to the quiz detail page
         return redirect('add_questions', quiz_id=quiz.id)
-    return render(request, 'quizzes/add_questions.html', {'quiz': quiz})
+    return render(request, 'app/add_questions.html', {'quiz': quiz})
 
 def take_quiz(request, quiz_id):
     quiz = get_object_or_404(Quiz, pk=quiz_id)
@@ -45,7 +45,7 @@ def take_quiz(request, quiz_id):
     question_id = questions_order[current_question_index]
     question = Question.objects.get(id=question_id)
     
-    return render(request, 'quizzes/take_question.html', {'quiz': quiz, 'question': question})
+    return render(request, 'app/take_quiz.html', {'quiz': quiz, 'question': question})
 
 def submit_answer(request, quiz_id, question_id):
     quiz = get_object_or_404(Quiz, pk=quiz_id)
