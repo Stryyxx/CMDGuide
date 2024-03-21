@@ -2,32 +2,12 @@ from django.shortcuts import redirect, render, get_object_or_404
 from .models import Answer, Attempt, Choice, Question, Quiz
 import random
 from django.contrib.auth.decorators import login_required
+import json
+from django.http import HttpResponseBadRequest, JsonResponse
 
 @login_required
 def create_quiz(request):
-    error_message = None
-    if request.method == 'POST':
-        title = request.POST.get('title')
-        description = request.POST.get('description')
-        if not title:
-            error_message = "Title is required."
-        else:
-            quiz = Quiz(title=title, description=description, creator=request.user)
-            quiz.save()
-            return redirect('app:add_questions', quiz_id=quiz.id)
-    return render(request, 'app/create_quiz.html', {'error_message': error_message})
-
-@login_required
-def add_questions(request, quiz_id):
-    quiz = Quiz.objects.get(id=quiz_id)
-    if request.method == 'POST':
-        text = request.POST.get('text')
-        # Assume you have fields for choices and correct answer
-        question = Question(quiz=quiz, text=text)
-        question.save()
-        # Redirect or render as needed, possibly to add more questions or to the quiz detail page
-        return redirect('app:add_questions', quiz_id=quiz.id)
-    return render(request, 'app/add_questions.html', {'quiz': quiz})
+    return render(request, 'app/create_quiz.html',)
 
 @login_required
 def take_quiz(request, quiz_id):
@@ -81,3 +61,19 @@ def quiz_results(request, quiz_id):
 def quiz_view(request):
     quizzes = Quiz.objects.all()  # Retrieve all quiz objects from the database
     return render(request, 'app/index.html', {'quizzes': quizzes})
+
+
+def fornow(request):
+    if request.methos == "POST":
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return HttpResponseBadRequest({"Invalid JSON"})
+        
+    # Validate that all required fields are present
+    required_fields = ['quizData']
+    if not all(field in data for field in required_fields):
+       return HttpResponseBadRequest("Missing required fields")
+    
+
+    print(data)

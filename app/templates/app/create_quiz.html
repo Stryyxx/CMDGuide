@@ -1,23 +1,39 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Create Quiz</title>
+		<link rel="stylesheet" href="{% static 'app/styles.css' %}" />
 	</head>
 	<body>
-		<form method="post" action="{% url 'app:create_quiz' %}">
-			{% csrf_token %} {% if error_message %}
-			<div class="error">{{ error_message }}</div>
-			{% endif %}
+		<div id="quizGenerator">
+			<input type="text" id="quizName" placeholder="Enter quiz name" />
+			<div id="questionsContainer"></div>
+			<button id="addQuestion">Add Question</button>
+			<button id="generateQuiz">Create Quiz</button>
+		</div>
 
-			<label for="title">Title:</label>
-			<input type="text" id="title" name="title" required /><br /><br />
+		<!-- Question Template -->
+		<template id="questionTemplate">
+			<div class="question">
+				<input type="text" placeholder="Enter question" />
+				<div class="choicesContainer"></div>
+				<button class="addChoiceBtn">Add Choice</button>
+				<button class="deleteQuestionBtn">Delete Question</button>
+			</div>
+		</template>
 
-			<label for="description">Description:</label>
-			<textarea id="description" name="description"></textarea><br /><br />
+		<!-- Choice Template -->
+		<template id="choiceTemplate">
+			<div class="choice">
+				<input type="checkbox" class="correctChoiceCheckbox" />
+				<input type="text" placeholder="Enter choice" />
+				<button class="deleteChoiceBtn">Delete</button>
+			</div>
+		</template>
 
-			<button type="submit">Create Quiz</button>
-		</form>
+		<script src="{% static 'app/quiz_generator.js' %}"></script>
 	</body>
 </html>

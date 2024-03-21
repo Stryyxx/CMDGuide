@@ -1,0 +1,80 @@
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f4f4f4;
+	padding: 20px;
+}
+
+#quizGenerator {
+	background-color: #fff;
+	max-width: 600px;
+	margin: 0 auto;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"],
+select {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	display: inline-block;
+}
+
+input[type="checkbox"] {
+	vertical-align: middle;
+	margin-right: 10px;
+}
+
+button {
+	display: inline-block;
+	background-color: #007bff;
+	color: #ffffff;
+	padding: 10px 15px;
+	margin: 5px 0;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: #0056b3;
+}
+
+.choicesContainer {
+	margin-bottom: 20px;
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	justify-content: center;
+}
+
+.choice {
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.choice input[type="text"] {
+	flex-grow: 1;
+	margin-right: 10px; /* Ensure some spacing between the choice text input and the remove button */
+}
+
+.choice button {
+	margin-left: 5px; /* Spacing between the choice input and the delete choice button */
+}
+
+.question {
+	margin-top: 10px;
+	display: flex;
+	flex-direction: column;
+	border-radius: 15px;
+	padding: 20px;
+	background-color: rgb(206, 206, 206);
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+}
+
+/* This consolidates all provided CSS, ensuring your quiz application looks polished and functions as intended. */
