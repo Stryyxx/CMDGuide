@@ -6,7 +6,7 @@
 		<title>Login</title>
 	</head>
 	<body>
-		<form method="post" action="{% url 'custom_login' %}">
+		<form method="post" action="{% url 'users:login_view' %}">
 			{% csrf_token %} {{ form.as_p }}
 			<button type="submit">Login</button>
 		</form>

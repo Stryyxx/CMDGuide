@@ -7,7 +7,7 @@
 	</head>
 	<body>
 		<h2>{{ quiz.title }}</h2>
-		<form method="post" action="{% url 'submit_answer' quiz.id question.id %}">
+		<form method="post" action="{% url 'app:submit_answer' quiz.id question.id %}">
 			{% csrf_token %} {% for question in questions %}
 			<div>
 				<p>{{ question.text }}</p>

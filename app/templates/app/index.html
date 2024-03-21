@@ -7,14 +7,14 @@
 	</head>
 	<body>
 		<h2>All Quizzes</h2>
-		<a href="{% url 'login_logout' %}"></a>
+		<a href="{% url 'users:logout_view' %}">Logout</a>
 		<ul>
 			{% for quiz in quizzes %}
-			<li><a href="{% url 'take_quiz' quiz.id %}">{{ quiz.title }}</a> - {{ quiz.description }}</li>
+			<li><a href="{% url 'app:take_quiz' quiz.id %}">{{ quiz.title }}</a> - {{ quiz.description }}</li>
 			{% empty %}
 			<li>No quizzes available.</li>
 			{% endfor %}
-			<a href="{% url 'create_quiz' %}" class="btn btn-primary">Create New Quiz</a>
+			<a href="{% url 'app:create_quiz' %}" class="btn btn-primary">Create New Quiz</a>
 		</ul>
 	</body>
 </html>

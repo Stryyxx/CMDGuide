@@ -6,7 +6,7 @@
 		<title>Register</title>
 	</head>
 	<body>
-		<form method="post">
+		<form method="post" action="{% url 'users:register' %}">
 			{% csrf_token %} {{ form.as_p }}
 			<button type="submit">Register</button>
 		</form>

@@ -1,9 +1,9 @@
 from django.shortcuts import redirect, render, get_object_or_404
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 from .models import Answer, Attempt, Choice, Question, Quiz
 import random
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def create_quiz(request):
     error_message = None
     if request.method == 'POST':
@@ -14,9 +14,10 @@ def create_quiz(request):
         else:
             quiz = Quiz(title=title, description=description, creator=request.user)
             quiz.save()
-            return redirect('add_questions', quiz_id=quiz.id)
+            return redirect('app:add_questions', quiz_id=quiz.id)
     return render(request, 'app/create_quiz.html', {'error_message': error_message})
 
+@login_required
 def add_questions(request, quiz_id):
     quiz = Quiz.objects.get(id=quiz_id)
     if request.method == 'POST':
@@ -25,9 +26,10 @@ def add_questions(request, quiz_id):
         question = Question(quiz=quiz, text=text)
         question.save()
         # Redirect or render as needed, possibly to add more questions or to the quiz detail page
-        return redirect('add_questions', quiz_id=quiz.id)
+        return redirect('app:add_questions', quiz_id=quiz.id)
     return render(request, 'app/add_questions.html', {'quiz': quiz})
 
+@login_required
 def take_quiz(request, quiz_id):
     quiz = get_object_or_404(Quiz, pk=quiz_id)
     if 'current_question_index' not in request.session:
@@ -40,13 +42,14 @@ def take_quiz(request, quiz_id):
     questions_order = request.session['questions_order']
     
     if current_question_index >= len(questions_order):
-        return redirect('quiz_results', quiz_id=quiz_id)
+        return redirect('app:quiz_results', quiz_id=quiz_id)
 
     question_id = questions_order[current_question_index]
     question = Question.objects.get(id=question_id)
     
     return render(request, 'app/take_quiz.html', {'quiz': quiz, 'question': question})
 
+@login_required
 def submit_answer(request, quiz_id, question_id):
     quiz = get_object_or_404(Quiz, pk=quiz_id)
     question = get_object_or_404(Question, pk=question_id, quiz=quiz)
@@ -63,16 +66,18 @@ def submit_answer(request, quiz_id, question_id):
     request.session['current_question_index'] += 1
     request.session.modified = True
 
-    return redirect('take_quiz', quiz_id=quiz.id)
+    return redirect('app:take_quiz', quiz_id=quiz.id)
 
+@login_required
 def quiz_results(request, quiz_id):
     quiz = get_object_or_404(Quiz, pk=quiz_id)
     attempt = Attempt.objects.get(quiz=quiz, user=request.user)
 
     # Calculate score or retrieve it if you've saved it previously
     score = sum(1 for answer in attempt.answer_set.all() if answer.chosen_choice.is_correct)
-    return render(request, 'quizzes/quiz_results.html', {'quiz': quiz, 'attempt': attempt, 'score': score})
+    return render(request, 'app/quiz_results.html', {'quiz': quiz, 'attempt': attempt, 'score': score})
 
+@login_required
 def quiz_view(request):
     quizzes = Quiz.objects.all()  # Retrieve all quiz objects from the database
-    return render(request, 'quizzes/quiz_list.html', {'quizzes': quizzes})
+    return render(request, 'app/index.html', {'quizzes': quizzes})

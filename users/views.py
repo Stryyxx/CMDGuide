@@ -8,7 +8,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('quiz_list')
+            return redirect('app:quiz_list')
     else:
         form = UserCreationForm()
     return render(request, 'users/signup.html', {'form': form})
@@ -22,11 +22,11 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('quiz_list')  # Redirect to quizzes page after login
+                return redirect('app:quiz_list')  # Redirect to quizzes page after login
     else:
         form = AuthenticationForm()
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'users/login.html', {'form': form})
 
 def logout_view(request):
     logout(request)
-    return redirect('login')  # Redirect to login page after logout
+    return redirect('users:login_view')  # Redirect to login page after logout

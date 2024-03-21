@@ -6,7 +6,7 @@
 		<title>Create Quiz</title>
 	</head>
 	<body>
-		<form method="post" action="{% url 'create_quiz' %}">
+		<form method="post" action="{% url 'app:create_quiz' %}">
 			{% csrf_token %} {% if error_message %}
 			<div class="error">{{ error_message }}</div>
 			{% endif %}
