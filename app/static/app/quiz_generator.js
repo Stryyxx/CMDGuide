@@ -71,22 +71,22 @@ document.addEventListener("DOMContentLoaded", function () {
 			questions: questions,
 		};
 
-		fetch("/quiz/submit", {
+		fetch("", {
 			method: "POST",
 			headers: {
 				"X-CSRFToken": getCookie("csrftoken"),
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				quizId: dataString.id,
-				answer: answerInput.value,
-				questionId: currentQuestion.id,
+				quizData: quizData,
 			}),
 		})
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.success) {
-					alert("Quiz Submitted");
+					const quizId = data.quizId;
+					console.log("Quiz submitted successfully with ID:", quizId);
+					alert("Quiz Submitted. Quiz ID: " + quizId);
 				} else alert("Server Error, try again later");
 			});
 
