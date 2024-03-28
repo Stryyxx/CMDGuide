@@ -3,12 +3,15 @@ from django.contrib.auth.models import User
 import uuid
 
 class Quiz(models.Model): 
+    def get_default_user():
+        return User.objects.first().id
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     unanswered = models.JSONField(default=dict)
     incorrectlyAnswered = models.JSONField(default=dict, blank=True, null=True)
     correctlyAnswered = models.JSONField(default=dict, blank=True, null=True)
     completed = models.BooleanField(default=False)
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='quizzes')
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='quizzes', blank=True, null=True)
     def __str__(self):
         return (f"Quiz ID: {self.id}, User: {self.user.username}, "
                 f"Unanswered: {self.unanswered}, Incorrectly Answered: {self.incorrectlyAnswered}, "

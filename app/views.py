@@ -25,7 +25,7 @@ def create_quiz(request):
         quiz = Quiz(user=request.user, unanswered=questions);
         return JsonResponse({"success": True, "quizId": quiz.id})
     else:
-        return render(request, 'app/create_quiz.html',)
+        return render(request, 'app/create_quiz.html')
 
 @login_required
 def take_quiz(request, quiz_id):
@@ -76,8 +76,16 @@ def quiz_results(request, quiz_id):
     return render(request, 'app/quiz_results.html', {'quiz': quiz, 'attempt': attempt, 'score': score})
 
 @login_required
-def quiz_view(request):
-    quizzes = Quiz.objects.all()  # Retrieve all quiz objects from the database
+def quiz_view(request, quiz_id):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return HttpResponseBadRequest({"Invalid JSON"})
+    
+    quiz_data = data['quizData']
+    quiz_title = quiz_data['title']
+    quizzes = get_object_or_404(Quiz, pk=quiz_id)  # Retrieve all quiz objects from the database
     return render(request, 'app/index.html', {'quizzes': quizzes})
 
 

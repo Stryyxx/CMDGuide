@@ -9,8 +9,8 @@
 		<h2>All Quizzes</h2>
 		<a href="{% url 'users:logout_view' %}">Logout</a>
 		<ul>
-			{% for quiz in quizzes %}
-			<li><a href="{% url 'app:take_quiz' quiz.id %}">{{ quiz.title }}</a> - {{ quiz.description }}</li>
+			{% for quiz.id in quizzes %}
+			<li><a href="{% url 'app:take_quiz' quiz_id=quiz-id %}">{{ quiz_title }}</a></li>
 			{% empty %}
 			<li>No quizzes available.</li>
 			{% endfor %}
