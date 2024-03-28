@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 import json
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.http import JsonResponse
+from django.core import serializers
 
 
 @login_required
@@ -76,17 +77,16 @@ def quiz_results(request, quiz_id):
     return render(request, 'app/quiz_results.html', {'quiz': quiz, 'attempt': attempt, 'score': score})
 
 @login_required
-def quiz_view(request, quiz_id):
+def quiz_view(request):
     if request.method == "POST":
         try:
             data = json.loads(request.body)
         except json.JSONDecodeError:
             return HttpResponseBadRequest({"Invalid JSON"})
     
-    quiz_data = data['quizData']
-    quiz_title = quiz_data['title']
-    quizzes = get_object_or_404(Quiz, pk=quiz_id)  # Retrieve all quiz objects from the database
-    return render(request, 'app/index.html', {'quizzes': quizzes})
+    quizzes = Quiz.objects.all()
+    userQuizzes = serializers.serialize('json', quizzes)  # Retrieve all quiz objects from the database
+    return render(request, 'app/index.html', {'quizzes': userQuizzes})
 
 
 def submit_answer(request):
