@@ -1,20 +1,70 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>CMDGuide</title>
-	</head>
-	<body>
-		<h2>All Quizzes</h2>
-		<a href="{% url 'users:logout_view' %}">Logout</a>
-		<ul>
-			{% for quiz.id in quizzes %}
-			<li><a href="{% url 'app:take_quiz' quiz_id=quiz-id %}">{{ quiz_title }}</a></li>
-			{% empty %}
-			<li>No quizzes available.</li>
-			{% endfor %}
-			<a href="{% url 'app:create_quiz' %}" class="btn btn-primary">Create New Quiz</a>
-		</ul>
-	</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CMDGuide | Home</title>
+        <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+        <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    </head>
+    <body>
+
+        <nav class="navbar">
+            <div class="nav-logo-and-text">
+                <img src="{% static 'images/icon.png' %}" alt="CMDGuide Logo" class="nav-logo">
+                <span>EduQuiz</span>
+            </div>
+            <div class="nav-user-and-logout">
+                <span>@{{ request.user.username }}</span>
+                <button class="logout-btn">Logout</button>
+            </div>
+        </nav>
+        
+        <section class="take-quiz-section">
+            <h2>Take a Quiz</h2>
+            <div class="quiz-input-container">
+                <input type="text" class="quiz-input" placeholder="Quiz Code">
+                <button class="take-quiz-btn">Take Quiz</butFton>
+            </div>
+        </section>
+        
+        <section class="incomplete-attempts">
+            <h3>Incomplete Attempts</h3>
+            <div class="quizzes">
+                <!-- Example Quiz Card -->
+                <button class="quiz-card">
+                    <span class="quiz-name">Quiz Name</span>
+                    <!-- Add a progress bar or other elements as needed -->
+                </button>
+                <!-- More quiz cards as needed -->
+            </div>
+        </section>
+        
+        <section class="complete-attempts">
+            <h3>Complete Attempts</h3>
+            <div class="quizzes">
+                <!-- Example Quiz Card -->
+                <button class="quiz-card completed">
+                    <span class="quiz-name">Quiz Name</span>
+                    <span>Completed X days ago</span>
+                </button>
+                <!-- More quiz cards as needed -->
+            </div>
+        </section>
+        
+        <section class="my-quizzes">
+            <h3>My Quizzes</h3>
+            <button class="create-quiz-btn"><a href="{% url 'app:create_quiz' %}">Create Quiz</a></button>
+            <div class="quizzes my-quizzes-cards">
+                <!-- Example Quiz Card -->
+                <button class="quiz-card">
+                    <span class="quiz-name">Quiz Name</span>
+                    <span>Attempts/Submissions: X</span>
+                </button>
+                <!-- More quiz cards as needed -->
+            </div>
+        </section>
+        
+        </body>
 </html>

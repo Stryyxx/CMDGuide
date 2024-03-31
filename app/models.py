@@ -3,48 +3,18 @@ from django.contrib.auth.models import User
 import uuid
 
 class Quiz(models.Model): 
-    def get_default_user():
-        return User.objects.first().id
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    unanswered = models.JSONField(default=dict)
-    incorrectlyAnswered = models.JSONField(default=dict, blank=True, null=True)
-    correctlyAnswered = models.JSONField(default=dict, blank=True, null=True)
-    completed = models.BooleanField(default=False)
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='quizzes', blank=True, null=True)
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='quizzes')
+    questionData = models.JSONField(default=dict, blank=True, null=True)
     def __str__(self):
-        return (f"Quiz ID: {self.id}, User: {self.user.username}, "
-                f"Unanswered: {self.unanswered}, Incorrectly Answered: {self.incorrectlyAnswered}, "
-                f"Correctly Answered: {self.correctlyAnswered}, Completed: {self.completed},")
-
-class Question(models.Model):
-    quiz = models.ForeignKey(Quiz, related_name='questions', on_delete=models.CASCADE)
-    question = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.text
-
-class Choice(models.Model):
-    question = models.ForeignKey(Question, related_name='choices', on_delete=models.CASCADE)
-    text = models.CharField(max_length=255)
-    is_correct = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.text
+        return self.id
 
 class Attempt(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    quiz = models.ForeignKey(Quiz, related_name='attempts', on_delete=models.CASCADE)
-    score = models.IntegerField(default=0)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='attempts')
+    completed = models.BooleanField(default=False)
+    answeredQuestions = models.JSONField(default=list, blank=True)
+    unansweredQuestions = models.JSONField(default=list, blank=True)
 
     def __str__(self):
-        return f'{self.user.username} - {self.quiz.title}'
-
-class Answer(models.Model):
-    attempt = models.ForeignKey(Attempt, related_name='answers', on_delete=models.CASCADE)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    chosen_choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f'{self.attempt} - {self.question.text} - {self.chosen_choice.text}'
-
+        return f"Attempt {self.id} by {self.user.username}"
