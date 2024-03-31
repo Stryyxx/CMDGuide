@@ -1,14 +1,30 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Register</title>
+		<title>CMDGuide | Sign Up</title>
+		<link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}" />
+		<link rel="stylesheet" href="{% static 'css/login.css' %}" />
 	</head>
 	<body>
-		<form method="post" action="{% url 'users:register' %}">
-			{% csrf_token %} {{ form.as_p }}
-			<button type="submit">Register</button>
-		</form>
+		<div class="mainContent">
+			<div class="rowFlex">
+				<img src="{% static 'images/icon.png' %}" class="xlLogo" />
+			</div>
+			{% if message %}
+			<div class="{{ message.class }}">
+				<p class="smTitle">{{ message.type }}</p>
+				<p class="smBody">{{ message.text }}</p>
+			</div>
+			{% endif %}
+			<form class="colFlex card" action="{% url 'users:signup' %}" method="post">
+				{% csrf_token %}
+				<input class="inputField" type="text" name="username" placeholder="Username" />
+				<input class="inputField" type="password" name="password" placeholder="Password" />
+				<input class="inputField" type="password" name="confirmPassword" placeholder="Confirm Password" />
+				<button type="submit">Create my account!</button>
+				<a class="hyperlink" href="{% url 'users:login' %}"> Already have an account? Login </a>
+			</form>
+		</div>
 	</body>
 </html>

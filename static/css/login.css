@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+body,
+input,
+button,
+a {
+	font-family: "Inter", sans-serif;
+	color: #333; /* Darker text for better readability */
+}
+
+.mainContent {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	background-color: #f0f4f8;
+}
+
+.rowFlex,
+.colFlex {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.xlLogo {
+	width: 120px; /* Adjust the size of your icon */
+	height: auto;
+	margin-bottom: 20px;
+}
+
+.inputField {
+	padding: 15px 20px; /* More padding for a bubbly effect */
+	margin: 10px 0;
+	border: none;
+	border-radius: 15px; /* Increased border-radius for a bubble look */
+	outline: none;
+	width: 250px; /* Adjust based on your preference */
+	background-color: #e3f2fd; /* Lighter shade for the input background */
+	color: #333; /* Darker text for better readability */
+	box-sizing: border-box; /* Make sure padding doesn't affect the overall width */
+	transition: background-color 0.3s ease-in-out;
+}
+
+.inputField:focus {
+	background-color: #bbdefb; /* Slightly darker when focused for a subtle effect */
+}
+
+button {
+	padding: 15px 20px;
+	margin-top: 20px;
+	background-color: #bbdefb; /* Baby blue background for the button */
+	border: none;
+	border-radius: 15px; /* More rounded edges for that bubble effect */
+	color: #333; /* Darker text for better contrast */
+	cursor: pointer;
+	transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+	background-color: #90caf9; /* A bit darker on hover for an interactive feel */
+}
+
+.hyperlink {
+	color: #90caf9; /* Baby blue hyperlink for consistency */
+	text-decoration: none;
+	margin-top: 20px;
+}
+
+.simpleFooter {
+	text-align: center;
+	margin-top: 20px;
+	width: 100%;
+	padding: 10px 0;
+	background-color: #fff;
+	border-top: 1px solid #eee;
+}
+
+.smTitle,
+.smBody {
+	margin: 5px 0;
+	color: #333; /* Ensuring text is easily readable */
+}
