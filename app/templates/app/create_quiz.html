@@ -5,36 +5,53 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Create Quiz</title>
+		<!-- Link to the favicon -->
 		<link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}" />
+		<!-- Link to the CSS stylesheet -->
 		<link rel="stylesheet" href="{% static 'css/create_quiz.css' %}" />
 	</head>
 	<body>
+		<!-- Div container for the quiz generator -->
 		<div id="quizGenerator">
+			<!-- Input field for entering quiz name -->
 			<input type="text" id="quizName" placeholder="Enter quiz name" />
+			<!-- Container for questions -->
 			<div id="questionsContainer"></div>
+			<!-- Button to add a new question -->
 			<button id="addQuestion">Add Question</button>
+			<!-- Button to generate the quiz -->
 			<button id="generateQuiz">Create Quiz</button>
 		</div>
 
 		<!-- Question Template -->
+		<!-- Template for creating a new question -->
 		<template id="questionTemplate">
 			<div class="question">
+				<!-- Input field for entering the question -->
 				<input type="text" placeholder="Enter question" />
+				<!-- Container for choices -->
 				<div class="choicesContainer"></div>
+				<!-- Button to add a new choice -->
 				<button class="addChoiceBtn">Add Choice</button>
+				<!-- Button to delete the question -->
 				<button class="deleteQuestionBtn">Delete Question</button>
 			</div>
 		</template>
 
 		<!-- Choice Template -->
+		<!-- Template for creating a new choice -->
 		<template id="choiceTemplate">
 			<div class="choice">
+				<!-- Checkbox for marking correct choice -->
 				<input type="checkbox" class="correctChoiceCheckbox" />
+				<!-- Input field for entering the choice -->
 				<input type="text" placeholder="Enter choice" />
+				<!-- Button to delete the choice -->
 				<button class="deleteChoiceBtn">Delete</button>
 			</div>
 		</template>
 
+		<!-- Link to the JavaScript file -->
 		<script src="{% static 'js/quiz_generator.js' %}"></script>
 	</body>
 </html>

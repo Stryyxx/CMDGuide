@@ -3,25 +3,35 @@
 <html lang="en">
 	<head>
 		<title>CMDGuide | Log In</title>
+		<!-- Link to the favicon -->
 		<link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}" />
+		<!-- Link to the CSS stylesheet -->
 		<link rel="stylesheet" href="{% static 'css/login.css' %}" />
 	</head>
 	<body>
+		<!-- Main content container -->
 		<div class="mainContent">
 			<div class="rowFlex">
+				<!-- Logo image -->
 				<img src="{% static 'images/icon.png' %}" class="xlLogo" />
 			</div>
 			{% if message %}
+			<!-- Display message if present -->
 			<div class="{{ message.class }}">
 				<p class="smTitle">{{ message.type }}</p>
 				<p class="smBody">{{ message.text }}</p>
 			</div>
 			{% endif %}
+			<!-- Login form -->
 			<form class="colFlex card" action="{% url 'users:login' %}" method="post">
 				{% csrf_token %}
+				<!-- Username input field -->
 				<input class="inputField" type="text" name="username" placeholder="Username" />
+				<!-- Password input field -->
 				<input class="inputField" type="password" name="password" placeholder="Password" />
+				<!-- Submit button -->
 				<button type="submit">Login</button>
+				<!-- Link to signup page -->
 				<a class="hyperlink" href="{% url 'users:signup' %}"> Don't have an account? Create one! </a>
 			</form>
 		</div>

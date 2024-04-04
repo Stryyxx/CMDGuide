@@ -1,13 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
+	// Get references to DOM elements
 	const addQuestionBtn = document.getElementById("addQuestion");
 	const generateQuizBtn = document.getElementById("generateQuiz");
 	const questionsContainer = document.getElementById("questionsContainer");
 
+	// Initialize counters for question and choice IDs
 	let questionIdCounter = 0;
 	let choiceIdCounter = 0;
 
+	// Event listener for adding a new question
 	addQuestionBtn.addEventListener("click", function () {
+		// Increment question ID counter
 		questionIdCounter++;
+		// Clone the question template
 		const questionTemplate = document.getElementById("questionTemplate");
 		const questionClone = document.importNode(questionTemplate.content, true);
 
@@ -15,39 +20,50 @@ document.addEventListener("DOMContentLoaded", function () {
 		const correctAnswerName = "correctAnswer" + questionIdCounter;
 		questionClone.querySelector(".choicesContainer").setAttribute("data-question-id", questionIdCounter);
 
+		// Event listener for adding a new choice
 		const addChoiceBtn = questionClone.querySelector(".addChoiceBtn");
 		addChoiceBtn.addEventListener("click", function (e) {
 			e.preventDefault();
+			// Clone the choice template
 			const choiceTemplate = document.getElementById("choiceTemplate");
 			const choiceClone = document.importNode(choiceTemplate.content, true);
 
+			// Increment choice ID counter
 			choiceIdCounter++;
+			// Set the choice ID for data attribute
 			const choiceInput = choiceClone.querySelector("input[type='text']");
 			choiceInput.dataset.choiceId = choiceIdCounter;
 
+			// Set up correct choice checkbox
 			const correctChoiceCheckbox = choiceClone.querySelector(".correctChoiceCheckbox");
 			correctChoiceCheckbox.name = correctAnswerName;
 			correctChoiceCheckbox.value = choiceIdCounter;
 
+			// Event listener for deleting a choice
 			const deleteChoiceBtn = choiceClone.querySelector(".deleteChoiceBtn");
 			deleteChoiceBtn.addEventListener("click", function (e) {
 				e.preventDefault();
 				deleteChoiceBtn.parentNode.remove();
 			});
 
+			// Append the choice to the choices container
 			addChoiceBtn.before(choiceClone);
 		});
 
+		// Event listener for deleting a question
 		const deleteQuestionBtn = questionClone.querySelector(".deleteQuestionBtn");
 		deleteQuestionBtn.addEventListener("click", function (e) {
 			e.preventDefault();
 			deleteQuestionBtn.parentNode.remove();
 		});
 
+		// Append the question to the questions container
 		questionsContainer.appendChild(questionClone);
 	});
 
+	// Event listener for generating the quiz
 	generateQuizBtn.addEventListener("click", function () {
+		// Get quiz name and questions data
 		const quizName = document.getElementById("quizName").value;
 		const questions = Array.from(questionsContainer.children).map((questionDiv) => {
 			const questionInput = questionDiv.querySelector('input[type="text"]');
@@ -66,11 +82,13 @@ document.addEventListener("DOMContentLoaded", function () {
 			};
 		});
 
+		// Prepare quiz data for submission
 		const quizData = {
 			quizName: quizName,
 			questions: questions,
 		};
 
+		// Fetch request to submit quiz data
 		fetch("", {
 			method: "POST",
 			headers: {
@@ -90,8 +108,8 @@ document.addEventListener("DOMContentLoaded", function () {
 				} else alert("Server Error, try again later");
 			});
 
+		// Function to retrieve CSRF token from cookie
 		function getCookie(cname) {
-			// CHATGPT generated this to isolate the csrf out of the django cookie.
 			let name = cname + "=";
 			let decodedCookie = decodeURIComponent(document.cookie);
 			let ca = decodedCookie.split(";");
@@ -107,6 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			return "";
 		}
 
+		// Log the quiz data for debugging purposes
 		console.log(JSON.stringify(quizData));
 	});
 });
