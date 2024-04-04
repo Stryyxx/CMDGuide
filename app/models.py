@@ -12,6 +12,7 @@ class Quiz(models.Model):
 class Attempt(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='attempts')
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='attempts')
     completed = models.BooleanField(default=False)
     answeredQuestions = models.JSONField(default=list, blank=True)
     unansweredQuestions = models.JSONField(default=list, blank=True)

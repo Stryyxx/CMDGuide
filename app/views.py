@@ -30,4 +30,4 @@ def create_quiz(request):
         return render(request, 'app/create_quiz.html')
 
 def index(request):
-    return render(request, 'app/index.html')
+    render(request, 'app/index.html')

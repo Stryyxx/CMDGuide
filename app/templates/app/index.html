@@ -17,7 +17,7 @@
             </div>
             <div class="nav-user-and-logout">
                 <span>@{{ request.user.username }}</span>
-                <button class="logout-btn">Logout</button>
+                <button class="logout-btn"><a href="{% url 'users:logout' %}">Logout</a></button>
             </div>
         </nav>
         
